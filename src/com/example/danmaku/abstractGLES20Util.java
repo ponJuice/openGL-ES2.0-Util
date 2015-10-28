@@ -1,4 +1,4 @@
-
+package com.example.danmaku;
 
 import java.io.IOException;
 import java.io.InputStream;

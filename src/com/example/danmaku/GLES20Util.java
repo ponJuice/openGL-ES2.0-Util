@@ -1,5 +1,6 @@
+package com.example.danmaku;
 
-
+import android.R;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.opengl.GLES20;
@@ -21,18 +22,18 @@ public class GLES20Util extends abstractGLES20Util{
 	 */
 	//画像表示
 	public static void DrawGraph(float startX,float startY,float lengthX,float lengthY,Bitmap image){
-		
+
 		float scaleX = lengthX;
 		float scaleY = lengthY;
-		
+
 		float[] modelMatrix = new float[16];
 		Matrix.setIdentityM(modelMatrix, 0);
 		Matrix.translateM(modelMatrix,0,startX-aspect,startY-1.0f,0.0f);
 		Matrix.scaleM(modelMatrix,0,scaleX,scaleY,1.0f);
 		setShaderModelMatrix(modelMatrix);
-		
+
 		setOnTexture(image);
-		
+
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP,0,4);	//描画
 		}
 
@@ -53,9 +54,9 @@ public class GLES20Util extends abstractGLES20Util{
 		DrawGraph(x,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place100]);
 		DrawGraph(x+62.0f/1000.0f,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place10]);
 		DrawGraph(x+62.0f/1000.0f*2.0f,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place1]);
-		
+
 	}
-	
+
 	/**
 	 * FPS用の十進数画像の作成。現在は用意されたdegital2.pngのみを対象。
 	 * @param ビットマップの配列。0～9の十個必要
@@ -79,7 +80,7 @@ public class GLES20Util extends abstractGLES20Util{
 						for(int a =0;a<62;a++){
 							for(int b=0;b<110;b++){
 								rgb = bitmap[count].getPixel(a, b);
-								
+
 								bitmap[count].setPixel(a, b,Color.argb(
 										(Color.red(rgb)+Color.red(rgb)+Color.blue(rgb))/3
 										,Color.red(rgb)
@@ -93,7 +94,7 @@ public class GLES20Util extends abstractGLES20Util{
 						for(int a =0;a<62;a++){
 							for(int b=0;b<110;b++){
 								rgb = bitmap[count].getPixel(a, b);
-								
+
 								bitmap[count].setPixel(a, b,Color.argb(
 										(255-Color.red(rgb)+255-Color.red(rgb)+255-Color.blue(rgb))/3
 										,Color.red(rgb)

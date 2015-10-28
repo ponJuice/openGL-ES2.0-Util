@@ -7,6 +7,8 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
 
+import com.example.opengles20util.graphic.Image;
+
 
 public class GLES20Util extends abstractGLES20Util{
 	public GLES20Util(){
@@ -36,6 +38,22 @@ public class GLES20Util extends abstractGLES20Util{
 
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP,0,4);	//描画
 		}
+
+	public static void DrawGraph(float startX,float startY,float lengthX,float lengthY,Image img){
+		float scaleX = lengthX;
+		float scaleY = lengthY;
+
+		float[] modelMatrix = new float[16];
+		Matrix.setIdentityM(modelMatrix, 0);
+		Matrix.translateM(modelMatrix,0,startX-aspect,startY-1.0f,0.0f);
+		Matrix.scaleM(modelMatrix,0,scaleX,scaleY,1.0f);
+		setShaderModelMatrix(modelMatrix);
+
+		img.getBlend().setBlendMode();
+		setOnTexture(img.getImage());
+
+		GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP,0,4);	//描画
+	}
 
 	/**
 	 * FPS表示。三桁。FPSに限らず数値であれば表示できる

@@ -127,6 +127,14 @@ public abstract class abstractGLES20Util {
 		1.0f,0.0f
 	};
 
+	public static float getWidth(){
+		return Width;
+	}
+
+	public static float getHight(){
+		return Height;
+	}
+
 	/**
 	 * 画面のアスペクト比を取得します
 	 * @return　アスペクト比

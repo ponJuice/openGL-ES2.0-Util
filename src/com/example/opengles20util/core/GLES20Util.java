@@ -1,8 +1,12 @@
-package com.example.opengles20util.core;
+﻿package com.example.opengles20util.core;
 
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.FontMetrics;
+import android.graphics.Rect;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
@@ -11,9 +15,44 @@ import com.example.opengles20util.graphic.Image;
 
 
 public class GLES20Util extends abstractGLES20Util{
+	private static Paint paint;
+	private static Canvas canvas;
+	private static Rect rect = new Rect(0,0,0,0);
+
 	public GLES20Util(){
 		Log.d("GLES20Util","Constract");
 	}
+	
+	//文字列描画
+	private static Bitmap stringToBitmap(String text,float size,int r,int g,int b){
+	    //描画するテキスト
+		paint = new Paint();
+
+		paint.setAntiAlias(true);
+		paint.setColor(Color.rgb(r, g, b));
+		paint.setTextSize(size*100);
+		paint.getTextBounds(text, 0, text.length(), new Rect());
+		FontMetrics fm = paint.getFontMetrics();
+		//テキストの表示範囲を設定
+
+		int textWidth = (int) paint.measureText(text);
+		int textHeight = (int) (Math.abs(fm.top) + fm.bottom);
+		//Log.d("stringToBitmap",String.valueOf(textWidth)+" : "+String.valueOf(textHeight));
+		Bitmap bitmap = Bitmap.createBitmap(textWidth, textHeight, Bitmap.Config.ARGB_8888);
+
+		//キャンバスからビットマップを取得
+		canvas = new Canvas(bitmap);
+		canvas.drawText(text, 0, Math.abs(fm.top), paint);
+
+		return bitmap;
+	}
+
+	public static void DrawString(String string,int size,int r,int g,int b,float x,float y){
+		Bitmap bitmap = stringToBitmap(string,size,r,g,b);
+		//Log.d("DrawString",String.valueOf(bitmap.getWidth()));
+		DrawGraph(x,y,bitmap.getWidth()/1000f,bitmap.getHeight()/1000f,bitmap);
+	}
+
 	/**
 	 * 画像表示
 	 * @param 表示場所の左上x座標
@@ -55,6 +94,10 @@ public class GLES20Util extends abstractGLES20Util{
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP,0,4);	//描画
 	}
 
+	public static void DrawString(String text,int textSize,Color color,float x,float y){
+
+	}
+
 	/**
 	 * FPS表示。三桁。FPSに限らず数値であれば表示できる
 	 * @param 表示する左上x座標
@@ -86,19 +129,11 @@ public class GLES20Util extends abstractGLES20Util{
 		int rgb = 0;
 		for(int n=0;n<2;n++){
 			for(int m=0;m<5;m++){
-				/*if(n==0&&m==0)
-					bitmap[count] = loadBitmap(62*m+1,110*n+1,62*(m+1),110*(n+1),R.drawable.degital);
-				else if(m==0)
-					bitmap[count] = loadBitmap(62*m+1,110*n,62*(m+1),110*(n+1),R.drawable.degital);
-				else*/
-					//bitmap[count].setConfig(Bitmap.Config.ARGB_8888);
 					bitmap[count] = loadBitmap(62*m,110*n,62*(m+1),110*(n+1),resource);
-					//bitmap[count].setConfig(Bitmap.Config.ARGB_8888);
 					if(flag){
 						for(int a =0;a<62;a++){
 							for(int b=0;b<110;b++){
 								rgb = bitmap[count].getPixel(a, b);
-
 								bitmap[count].setPixel(a, b,Color.argb(
 										(Color.red(rgb)+Color.red(rgb)+Color.blue(rgb))/3
 										,Color.red(rgb)

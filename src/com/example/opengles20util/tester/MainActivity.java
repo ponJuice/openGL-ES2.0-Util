@@ -1,4 +1,4 @@
-package com.example.opengles20util.tester;
+package com.example.opengles20util.Tester;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -63,9 +63,9 @@ public class MainActivity extends Activity implements GLSurfaceView.Renderer{
 			// 描画領域をクリアする
 			GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 			//文字の描画
-			GLES20Util.DrawString("Hello OpenGLES2.0!!", 1, 255, 255, 255, 0, 0);
+			GLES20Util.DrawString("Hello OpenGLES2.0!!", 1, 255, 255, 255,0.5f, 0, 0);
 
 		    //FPSの表示
-		    GLES20Util.DrawFPS(1.1f,1.8f,fpsController.getFps(),fpsImage);
+		    GLES20Util.DrawFPS(1.1f,1.8f,fpsController.getFps(),fpsImage,0.5f);
 	}
 }

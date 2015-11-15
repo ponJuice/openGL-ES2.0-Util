@@ -22,9 +22,9 @@ public class GLES20Util extends abstractGLES20Util{
 	public GLES20Util(){
 		Log.d("GLES20Util","Constract");
 	}
-	
+
 	//文字列描画
-	private static Bitmap stringToBitmap(String text,float size,int r,int g,int b){
+	public static Bitmap stringToBitmap(String text,float size,int r,int g,int b){
 	    //描画するテキスト
 		paint = new Paint();
 
@@ -47,10 +47,10 @@ public class GLES20Util extends abstractGLES20Util{
 		return bitmap;
 	}
 
-	public static void DrawString(String string,int size,int r,int g,int b,float x,float y){
+	public static void DrawString(String string,int size,int r,int g,int b,float alpha,float x,float y){
 		Bitmap bitmap = stringToBitmap(string,size,r,g,b);
 		//Log.d("DrawString",String.valueOf(bitmap.getWidth()));
-		DrawGraph(x,y,bitmap.getWidth()/1000f,bitmap.getHeight()/1000f,bitmap);
+		DrawGraph(x,y,bitmap.getWidth()/1000f,bitmap.getHeight()/1000f,bitmap,alpha);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class GLES20Util extends abstractGLES20Util{
 	 * @param 表示する画像データ
 	 */
 	//画像表示
-	public static void DrawGraph(float startX,float startY,float lengthX,float lengthY,Bitmap image){
+	public static void DrawGraph(float startX,float startY,float lengthX,float lengthY,Bitmap image,float alpha){
 
 		float scaleX = lengthX;
 		float scaleY = lengthY;
@@ -73,7 +73,7 @@ public class GLES20Util extends abstractGLES20Util{
 		Matrix.scaleM(modelMatrix,0,scaleX,scaleY,1.0f);
 		setShaderModelMatrix(modelMatrix);
 
-		setOnTexture(image);
+		setOnTexture(image,alpha);
 
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP,0,4);	//描画
 		}
@@ -89,7 +89,7 @@ public class GLES20Util extends abstractGLES20Util{
 		setShaderModelMatrix(modelMatrix);
 
 		img.getBlend().setBlendMode();
-		setOnTexture(img.getImage());
+		setOnTexture(img.getImage(),1.0f);
 
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP,0,4);	//描画
 	}
@@ -106,15 +106,15 @@ public class GLES20Util extends abstractGLES20Util{
 	 * @param 十進数の数字が描かれているbitmapの配列
 	 */
 	//FPS表示	三桁表示
-	public static void DrawFPS(float x,float y,int FPS,Bitmap[] digitBitmap){
+	public static void DrawFPS(float x,float y,int FPS,Bitmap[] digitBitmap,float alpha){
 		int place100,place10,place1;
 		FPS %= 1000;
 		place100 = FPS/100;
 		place10 = (FPS-place100*100)/10;
 		place1 = (FPS - place100*100-place10*10);
-		DrawGraph(x,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place100]);
-		DrawGraph(x+62.0f/1000.0f,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place10]);
-		DrawGraph(x+62.0f/1000.0f*2.0f,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place1]);
+		DrawGraph(x,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place100],alpha);
+		DrawGraph(x+62.0f/1000.0f,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place10],alpha);
+		DrawGraph(x+62.0f/1000.0f*2.0f,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place1],alpha);
 
 	}
 

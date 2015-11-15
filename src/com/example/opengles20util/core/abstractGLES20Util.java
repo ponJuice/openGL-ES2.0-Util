@@ -76,6 +76,10 @@ public abstract class abstractGLES20Util {
 	 * サンプラーの場所
 	 */
 	private static  int u_Sampler;				//サンプラーの場所
+	/**
+	 * アルファ値
+	 */
+	private static int u_alpha;
 
 	/**
 	 * 視体積（立方体型）の近平面
@@ -179,7 +183,7 @@ public abstract class abstractGLES20Util {
 		//アルファブレンディングの有効化
 		GLES20.glEnable(GLES20.GL_BLEND);
 		//ブレンディングメソッドの有効化
-		GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+		GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	/**
@@ -356,7 +360,7 @@ public abstract class abstractGLES20Util {
 		setShaderModelMatrix(modelMatrix);
 
 		//単色塗りつぶし(単色ビットマップ作成メソッドを引数で呼び出し)
-		setOnTexture(createBitmap(r,g,b,a));
+		setOnTexture(createBitmap(r,g,b,a),1.0f);
 
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP,0,4);	//描画
 	}
@@ -413,6 +417,10 @@ public abstract class abstractGLES20Util {
 	    if (u_Sampler == -1) {
 	      throw new RuntimeException("u_Samplerの格納場所の取得に失敗");
 	    }
+	    u_alpha = GLES20.glGetUniformLocation(program, "u_alpha");
+	    if(u_alpha == -1){
+	    	throw new RuntimeException("u_alphaの格納場所の取得に失敗");
+	    }
 
 	    GLES20.glActiveTexture(GLES20.GL_TEXTURE0);   // テクスチャユニット0を有効にする
 
@@ -427,10 +435,11 @@ public abstract class abstractGLES20Util {
 	   * @param 使用する画像のbitmapデータ
 	   */
 	  //テクスチャ画像を設定する
-	  protected static void setOnTexture(Bitmap image){
+	  protected static void setOnTexture(Bitmap image,float alpha){
 		    // テクスチャ画像を設定する
 		    GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0,image, 0);
 
+		    GLES20.glUniform1f(u_alpha, alpha);		//サンプラにアルファを設定する
 		    GLES20.glUniform1i(u_Sampler,0);     // サンプラにテクスチャユニットを設定する
 	  }
 
@@ -484,7 +493,7 @@ public abstract class abstractGLES20Util {
 	   * @return　作成したビットマップデータ
 	   */
 	  //単色塗りつぶしbitmapの作成
-	  private static Bitmap createBitmap(int r,int g,int b,int a){
+	  public static Bitmap createBitmap(int r,int g,int b,int a){
 		  Bitmap bitmap = Bitmap.createBitmap(16, 16, Bitmap.Config.ARGB_8888);
 		  bitmap.eraseColor(Color.argb(a,r,g,b));
 		  return bitmap;

@@ -2,7 +2,7 @@ package com.example.opengles20util.graphic;
 
 import android.graphics.Bitmap;
 
-import com.example.opengles20util.graphic.composition_mode.GLES20COMPOSITIONMODE;
+import com.example.opengles20util.graphic.blending_mode.GLES20COMPOSITIONMODE;
 
 public class Image {
 	private int program;

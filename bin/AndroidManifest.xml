@@ -5,7 +5,11 @@
     android:versionName="1.0" >
 
     <uses-sdk
+<<<<<<< HEAD
+        android:minSdkVersion="8"
+=======
         android:minSdkVersion="9"
+>>>>>>> origin/openGLES2.0Util
         android:targetSdkVersion="21" />
 
     <application

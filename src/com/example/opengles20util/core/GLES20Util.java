@@ -12,6 +12,8 @@ import android.opengl.Matrix;
 import android.util.Log;
 
 import com.example.opengles20util.graphic.Image;
+import com.example.opengles20util.graphic.blending_mode.GLES20COMPOSITIONMODE;
+import com.example.opengles20util.graphic.blending_mode.GLES20COMPOSITION_ALPHA;
 
 
 public class GLES20Util extends abstractGLES20Util{
@@ -19,10 +21,33 @@ public class GLES20Util extends abstractGLES20Util{
 	private static Canvas canvas;
 	private static Rect rect = new Rect(0,0,0,0);
 
+<<<<<<< HEAD
+	public enum GLES20UTIL_MODE{
+		POSX,
+		POSY
+	}
+
+=======
+>>>>>>> origin/openGLES2.0Util
 	public GLES20Util(){
 		Log.d("GLES20Util","Constract");
 	}
 
+<<<<<<< HEAD
+	public static float screenToInnerPosition(float value,GLES20UTIL_MODE mode){
+		if(value == 0)
+			return 0;
+		if(mode == GLES20UTIL_MODE.POSX){
+			return (GLES20Util.getAspect()*2f)/(GLES20Util.getWidth())*value;
+		}
+		else if(mode == GLES20UTIL_MODE.POSY){
+			return (2f)/(GLES20Util.getHight())*(GLES20Util.getHight()-value);
+		}
+		return 0;
+	}
+
+=======
+>>>>>>> origin/openGLES2.0Util
 	//文字列描画
 	public static Bitmap stringToBitmap(String text,float size,int r,int g,int b){
 	    //描画するテキスト
@@ -37,7 +62,10 @@ public class GLES20Util extends abstractGLES20Util{
 
 		int textWidth = (int) paint.measureText(text);
 		int textHeight = (int) (Math.abs(fm.top) + fm.bottom);
+<<<<<<< HEAD
+=======
 		//Log.d("stringToBitmap",String.valueOf(textWidth)+" : "+String.valueOf(textHeight));
+>>>>>>> origin/openGLES2.0Util
 		Bitmap bitmap = Bitmap.createBitmap(textWidth, textHeight, Bitmap.Config.ARGB_8888);
 
 		//キャンバスからビットマップを取得
@@ -47,10 +75,17 @@ public class GLES20Util extends abstractGLES20Util{
 		return bitmap;
 	}
 
+<<<<<<< HEAD
+	public static void DrawString(String string,int size,int r,int g,int b,float alpha,float x,float y,GLES20COMPOSITIONMODE mode){
+		Bitmap bitmap = stringToBitmap(string,size,r,g,b);
+		//Log.d("DrawString",String.valueOf(bitmap.getWidth()));
+		DrawGraph(x,y,bitmap.getWidth()/1000f,bitmap.getHeight()/1000f,bitmap,alpha,mode);
+=======
 	public static void DrawString(String string,int size,int r,int g,int b,float alpha,float x,float y){
 		Bitmap bitmap = stringToBitmap(string,size,r,g,b);
 		//Log.d("DrawString",String.valueOf(bitmap.getWidth()));
 		DrawGraph(x,y,bitmap.getWidth()/1000f,bitmap.getHeight()/1000f,bitmap,alpha);
+>>>>>>> origin/openGLES2.0Util
 	}
 
 	/**
@@ -62,7 +97,11 @@ public class GLES20Util extends abstractGLES20Util{
 	 * @param 表示する画像データ
 	 */
 	//画像表示
+<<<<<<< HEAD
+	public static void DrawGraph(float startX,float startY,float lengthX,float lengthY,Bitmap image,float alpha,GLES20COMPOSITIONMODE mode){
+=======
 	public static void DrawGraph(float startX,float startY,float lengthX,float lengthY,Bitmap image,float alpha){
+>>>>>>> origin/openGLES2.0Util
 
 		float scaleX = lengthX;
 		float scaleY = lengthY;
@@ -75,6 +114,7 @@ public class GLES20Util extends abstractGLES20Util{
 
 		setOnTexture(image,alpha);
 
+		mode.setBlendMode();
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP,0,4);	//描画
 		}
 
@@ -88,9 +128,13 @@ public class GLES20Util extends abstractGLES20Util{
 		Matrix.scaleM(modelMatrix,0,scaleX,scaleY,1.0f);
 		setShaderModelMatrix(modelMatrix);
 
+<<<<<<< HEAD
+=======
 		img.getBlend().setBlendMode();
+>>>>>>> origin/openGLES2.0Util
 		setOnTexture(img.getImage(),1.0f);
 
+		img.getBlend().setBlendMode();
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP,0,4);	//描画
 	}
 
@@ -112,9 +156,15 @@ public class GLES20Util extends abstractGLES20Util{
 		place100 = FPS/100;
 		place10 = (FPS-place100*100)/10;
 		place1 = (FPS - place100*100-place10*10);
+<<<<<<< HEAD
+		DrawGraph(x,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place100],alpha,GLES20COMPOSITION_ALPHA.getInstance());
+		DrawGraph(x+62.0f/1000.0f,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place10],alpha,GLES20COMPOSITION_ALPHA.getInstance());
+		DrawGraph(x+62.0f/1000.0f*2.0f,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place1],alpha,GLES20COMPOSITION_ALPHA.getInstance());
+=======
 		DrawGraph(x,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place100],alpha);
 		DrawGraph(x+62.0f/1000.0f,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place10],alpha);
 		DrawGraph(x+62.0f/1000.0f*2.0f,y,62.0f/1000.0f,110.0f/1000.0f,digitBitmap[place1],alpha);
+>>>>>>> origin/openGLES2.0Util
 
 	}
 

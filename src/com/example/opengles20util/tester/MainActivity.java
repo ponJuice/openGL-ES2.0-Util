@@ -13,6 +13,7 @@ import com.example.opengles20util.R;
 import com.example.opengles20util.Util.FileManager;
 import com.example.opengles20util.Util.FpsController;
 import com.example.opengles20util.core.GLES20Util;
+import com.example.opengles20util.graphic.blending_mode.GLES20COMPOSITION_ALPHA;
 
 public class MainActivity extends Activity implements GLSurfaceView.Renderer{
 	private FpsController fpsController = new FpsController((short)60);
@@ -63,7 +64,13 @@ public class MainActivity extends Activity implements GLSurfaceView.Renderer{
 			// 描画領域をクリアする
 			GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 			//文字の描画
+<<<<<<< HEAD
+			//GLES20Util.DrawBox(0, 0, 1f, 0.5f, 255, 0, 0, 255);
+			GLES20Util.DrawString("Hello OpenGLES2.0!!", 1, 255, 255, 255,1f, 0, 0,GLES20COMPOSITION_ALPHA.getInstance());
+			GLES20Util.DrawString("Hello OpenGLES2.0!!", 1, 255, 255, 255,1f, 0.05f, 0,GLES20COMPOSITION_ALPHA.getInstance());
+=======
 			GLES20Util.DrawString("Hello OpenGLES2.0!!", 1, 255, 255, 255,0.5f, 0, 0);
+>>>>>>> origin/openGLES2.0Util
 
 		    //FPSの表示
 		    GLES20Util.DrawFPS(1.1f,1.8f,fpsController.getFps(),fpsImage,0.5f);

@@ -7,6 +7,10 @@ uniform float u_alpha;		//アルファ―値
 varying vec2 v_TexCoord;	//頂点シェーダからテクスチャ座標を受け取る
 void main() {
   gl_FragColor = texture2D(u_Sampler,v_TexCoord);
+<<<<<<< HEAD
+  gl_FragColor.a *= u_alpha;
+=======
   gl_FragColor.a = u_alpha;
+>>>>>>> origin/openGLES2.0Util
   //gl_FragColor = vec4(0.0, 1.0, 0.0, 0.5);
 }

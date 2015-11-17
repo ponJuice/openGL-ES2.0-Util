@@ -361,6 +361,10 @@ public abstract class abstractGLES20Util {
 
 		//単色塗りつぶし(単色ビットマップ作成メソッドを引数で呼び出し)
 		setOnTexture(createBitmap(r,g,b,a),1.0f);
+<<<<<<< HEAD
+		GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+=======
+>>>>>>> origin/openGLES2.0Util
 
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP,0,4);	//描画
 	}
